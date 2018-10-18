@@ -1,0 +1,52 @@
+<apex:page Controller="VfDashboard" applyBodyTag="false" applyHtmlTag="false" docType="html-5.0" showHeader="false"
+           sidebar="false" lightningStylesheets="{! IF($User.UITheme =="Theme4d" , TRUE, FALSE)}">
+ <head>
+     <meta name="viewport" content="width=device-width, initial-scale=1,minimum-scale=1, maximum-scale=1, user-scalable=no"/> 
+     <style>
+     html,html body{
+      overflow: auto;
+      -webkit-overflow-scrolling:auto;
+    }
+    body{
+      position:absolute;left:0;right:0;top:0;bottom:0;
+      margin:0;
+    }
+         
+.dateFormat{
+   visibility:hidden;
+}
+
+     </style>
+     
+</head> 
+<body>
+    
+   
+<apex:form >
+    <apex:pageBlock mode="inlineEdit" >
+        <apex:pageBlockButtons >
+        <apex:commandButton id="saveButton" value="Save" action="{!save}"/> 
+
+            <apex:commandButton id="cancelButton" value="Cancel"/> 
+
+        </apex:pageBlockButtons> 
+
+              <apex:pageBlockTable value="{!hierList}" var="h" >
+                <apex:column value="{!h.name}"/>
+                <apex:column value="{!h.Dm_Risk_Score_Last__c}"/>
+                <apex:column value="{!h.Dm_Risk_Score_current__c}"/>
+                  <apex:column value="{!h.Dm_Heathcheck_Completed__c}"/>
+                <apex:column value="{!h.Action__c}"/>
+                <apex:column headerValue="Schedule Date">
+                  <!--  <apex:outputField value="{!h.Schedule_Date__c}">
+                    	<apex:inlineEditSupport event="ondblClick" showOnEdit="saveButton,cancelButton"/>
+                    </apex:outputField>-->
+                    
+                  <apex:inputField styleClass="hideDate" value="{!h.Schedule_Date__c}"/>
+                </apex:column> 
+              </apex:pageBlockTable>
+                
+             </apex:pageBlock>
+ </apex:form>
+   </body>
+</apex:page>

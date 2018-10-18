@@ -1,0 +1,27 @@
+public with sharing class VfDashboard {
+   
+    public List<rkl__RK_Hierarchy_Node__c> hierList{get; set;}
+    public DmFHC_VfDashboard(){
+        hierList = [SELECT Id, Name, Dm_Risk_Score_current__c,Schedule_Date__c, Dm_Current_Month_Risk_Score__c ,Dm_Risk_Score_Last__c, Action__c, Dm_Last_Month_Risk_Score__c, Dm_Heathcheck_Completed__c, Dm_Financial_Healthcheck_Eligible__c
+                 FROM rkl__RK_Hierarchy_Node__c WHERE Dm_Financial_Healthcheck_Eligible__c = true AND rkl__Node_Level__c=8 LIMIT 10];
+    }
+    
+ 
+    public pageReference save(){
+        try{
+            List<rkl__RK_Hierarchy_Node__c> rkList = new List<rkl__RK_Hierarchy_Node__c>();
+            for(rkl__RK_Hierarchy_Node__c rkl : hierList ){
+                system.debug('The schedule date is '+rkl.Schedule_Date__c);
+                rkList.add(rkl);
+                
+            }
+            update rkList;
+        }catch(Exception e){
+            ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.Error, e.getMessage()));
+            return null;
+        }
+        return null;
+    }
+    
+    
+}
